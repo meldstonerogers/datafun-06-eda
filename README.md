@@ -65,6 +65,10 @@ git add .
 git commit -m "initial"                         
 git push origin main
 ```
+## Project Data Set
+For this project, a data set from Seaborn will be used. The data file is flights.csv and contains data of the number of passengers in given months and years. 
+[Flights Data Set](https://github.com/mwaskom/seaborn-data/blob/master/flights.csv)
+
 
 ## PROJECT START
 
