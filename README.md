@@ -192,7 +192,7 @@ git push origin main
 ```
 
 ## Project Summary
-
+This professional project created an exploratory data analysis (EDA) project using GitHub, Git, Jupyter, pandas, Seaborn and other popular data analytics tools. ChatGPT was used to assist trouble-shooting errors in code. 
 
 ## Specification
 
