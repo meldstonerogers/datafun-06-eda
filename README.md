@@ -22,16 +22,10 @@ Create requirements.txt in the root project folder.
 ```
 touch requirements.txt
 ```
-Add the following packages to your requirements.txt file:
-- jupyterlab
-- pandas
-- pyarrow
-- matplotlib
-- seaborn
 
-Install requirments.txt. 
+Install required packages 
 ```
-python3 -m pip install -r requirements.txt
+pip install requests matplotlib pandas seaborn pyarrow
 ```
 
 ## Freeze Requirements
@@ -50,15 +44,6 @@ Add the following to your .gitignore file:
 - .vscode/
 - .ipynb_checkpoints/
 
-## Import Dependencies 
-
-```
-import matplotlib.pyplot as plt
-import pandas as pd
-import seaborn as sns
-import pyarrow as pa
-```
-
 ## Initial Project Save
 ```
 git add .
@@ -70,7 +55,132 @@ For this project, a data set from Seaborn will be used. The data file is flights
 [Flights Data Set](https://github.com/mwaskom/seaborn-data/blob/master/flights.csv)
 
 
-## PROJECT START
+## Exploratory Data Analysis within Jupyter
+Create a new juypyter file. 
+```
+touch filename.ipynb
+```
+
+## Import Dependencies 
+
+```
+import matplotlib.pyplot as plt
+import pandas as pd
+import seaborn as sns
+import pyarrow as pa
+```
+## Follow Steps to Complete EDA
+### Data Acquisition
+```
+# Load the dataset into a pandas DataFrame - adjust this process for your custom data
+df = sns.load_dataset('flights')
+
+# Inspect first rows of the DataFrame
+print(df.head())
+```
+### Initial Data Inspection
+```
+print(df.head(10))
+print(df.shape)
+print(df.dtypes)
+```
+### Initial Descriptive Statistics
+```
+print(df.describe())
+```
+### Initial Data Distribution for Numerical Columns
+```
+# Inspect histogram by numerical column
+df['passengers'].hist()
+
+# Inspect histograms for all numerical columns
+df.hist()
+
+# Show all plots
+plt.show()
+```
+### Initial Data Distribution for Categorical Columns 
+```
+# Inspect value counts by categorical column
+df['month'].value_counts()
+
+# Inspect value counts for all categorical columns
+for col in df.select_dtypes(include=['object', 'category']).columns:
+    # Display count plot
+    sns.countplot(x=col, data=df)
+    plt.title(f'Distribution of {col}')
+    plt.show()
+
+# Show all plots
+plt.show()
+```
+### Initial Data Transformation and Feature Engineering
+```
+# Rename the column
+flights.rename(columns={'passengers': 'customers'}, inplace=True)
+
+
+# Add new column and calculate the cumulative sum of customers
+flights['cumulative_customers'] = flights['customers'].cumsum()
+
+
+# Print transformations
+print(flights.head())
+
+# Print column names
+print(flights.columns)
+```
+### Initial Visualizations 
+This section provides three different visualizations and discussions of the data. A box plot, line plot, and bar graph were used. 
+#### Part 1, box plot
+```
+# Create a box plot to depict outliers
+plt.figure(figsize=(10, 6))
+sns.boxplot(x=flights['customers'])
+
+# Set the title and labels
+plt.title('Box Plot of Customers')
+plt.xlabel('Customers')
+
+# Show the plot
+plt.show()
+```
+#### Part 2, line plot
+```
+# Create a line plot
+sns.lineplot(data=flights, x='year', y='customers')
+
+# Set the title and labels
+plt.title('Number of Customers Over Time')
+plt.xlabel('Year')
+plt.ylabel('Number of Customers')
+
+# Show the plot
+plt.show()
+```
+#### Part 3, bar graph
+```
+# Calculate the total number of customers for each month
+total_customers_by_month = flights.groupby('month', observed=True)['customers'].sum().reset_index()
+
+# Sort the data by total customers in descending order
+total_customers_by_month = total_customers_by_month.sort_values(by='customers', ascending=False)
+
+# Create a bar plot
+plt.figure(figsize=(10, 6))
+sns.barplot(data=total_customers_by_month, x='month', y='customers', order=total_customers_by_month['month'])
+
+# Set the title and labels
+plt.title('Total Number of Customers by Month')
+plt.xlabel('Month')
+plt.ylabel('Total Number of Customers')
+
+# Show the plot
+plt.show()
+```
+
+### Summary
+Within each visualization of data, observations and conclusions were noted. 
 
 
 ## Complete Your Project
